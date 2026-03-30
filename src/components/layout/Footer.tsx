@@ -10,8 +10,8 @@ const footerLinks = {
     { name: 'Careers', path: '/careers' },
   ],
   services: [
-    { name: 'Nursing Services', path: '/services' },
-    { name: 'Training Classes', path: '/staffing' },
+    { name: 'Nursing Services', path: '/nursing' },
+    { name: 'Training Classes', path: '/training' },
     { name: 'Healthcare Staffing', path: '/staffing' },
     { name: 'Resources', path: '/resources' },
   ],
@@ -26,9 +26,9 @@ export function Footer() {
           {/* Brand Column */}
           <div className="sm:col-span-2 lg:col-span-1 space-y-4 md:space-y-6">
             <div className="flex items-center gap-3">
-              <img 
-                src={logoImage} 
-                alt="Zenith Health Allies" 
+              <img
+                src={logoImage}
+                alt="Zenith Health Allies"
                 className="w-12 h-12 md:w-14 md:h-14 object-contain"
               />
               <div>
@@ -37,7 +37,7 @@ export function Footer() {
               </div>
             </div>
             <p className="text-background/70 text-sm leading-relaxed">
-              Dedicated to crafting a heritage of health excellence. Through compassionate care, 
+              Dedicated to crafting a heritage of health excellence. Through compassionate care,
               specialized training, and strategic staffing solutions.
             </p>
             <div className="flex gap-3">

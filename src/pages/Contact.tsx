@@ -2,22 +2,40 @@ import { Layout } from '@/components/layout/Layout';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
-import { useState } from 'react';
+import { useState, useMemo } from 'react';
 import { useToast } from '@/hooks/use-toast';
+import { useLocation } from 'react-router-dom';
 import { Phone, Mail, MapPin, Clock, Send } from 'lucide-react';
 import { submitToSheets } from '@/lib/forms';
+import { Helmet } from 'react-helmet-async';
+
+/** Derive service_type from ?service= param or page pathname as fallback. */
+function useServiceType(): 'nursing' | 'staffing' | 'training' | 'general' {
+  const location = useLocation();
+  return useMemo(() => {
+    const params = new URLSearchParams(location.search);
+    const param = params.get('service');
+    if (param === 'nursing' || param === 'staffing' || param === 'training') return param;
+    // Pathname-based fallback for direct navigation
+    if (location.pathname.includes('nursing')) return 'nursing';
+    if (location.pathname.includes('staffing')) return 'staffing';
+    if (location.pathname.includes('training')) return 'training';
+    return 'general';
+  }, [location.search, location.pathname]);
+}
 
 const contactInfo = [
   { icon: Phone, label: 'Main Phone', value: '(240) 278-1871', href: 'tel:240-278-1871' },
-{ icon: Phone, label: 'Secondary Phone', value: '(240) 610-1390', href: 'tel:240-610-1390' },
-{ icon: Mail, label: 'Email', value: 'hello@moheritagecares.com', href: 'mailto:hello@moheritagecares.com' },
-{ icon: MapPin, label: 'Office', value: '10005 Columbia Rd, suite L-261 Maryland, 21046' },
+  { icon: Phone, label: 'Secondary Phone', value: '(240) 610-1390', href: 'tel:240-610-1390' },
+  { icon: Mail, label: 'Email', value: 'hello@moheritagecares.com', href: 'mailto:hello@moheritagecares.com' },
+  { icon: MapPin, label: 'Office', value: '10005 Columbia Rd, suite L-261 Maryland, 21046' },
   { icon: Clock, label: 'Hours', value: 'Monday - Friday: 9AM - 5PM' },
 ];
 
 export default function ContactPage() {
   const { toast } = useToast();
   const [isLoading, setIsLoading] = useState(false);
+  const serviceType = useServiceType();
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -30,6 +48,14 @@ export default function ContactPage() {
     const result = await submitToSheets('contact', payload);
 
     if (result.success) {
+      // Push enriched service-level conversion event to GTM dataLayer
+      (window as any).dataLayer = (window as any).dataLayer || [];
+      (window as any).dataLayer.push({
+        event: 'contact_form_success',
+        service_type: serviceType,
+        page_path: window.location.pathname,
+      });
+
       toast({
         title: 'Message Sent!',
         description: "We'll get back to you within 24 hours.",
@@ -46,14 +72,30 @@ export default function ContactPage() {
     setIsLoading(false);
   };
 
+  const serviceLabels: Record<string, string> = {
+    nursing: 'Nursing Services',
+    staffing: 'Healthcare Staffing',
+    training: 'Training Classes',
+    general: 'General Inquiry',
+  };
+
   return (
     <Layout>
+      <Helmet>
+        <title>Contact Us | Zenith Health Allies — Maryland Healthcare</title>
+        <meta
+          name="description"
+          content="Contact Zenith Health Allies for nursing services, healthcare staffing, or training classes in Maryland. Call (240) 278-1871 or send a message online."
+        />
+        <link rel="canonical" href="https://zenithhealthallies.org/contact" />
+      </Helmet>
       {/* Contact Section */}
       <section className="py-16 md:py-24">
         <div className="container mx-auto px-4">
           <div className="grid lg:grid-cols-2 gap-10 md:gap-16">
             {/* Contact Info */}
             <div>
+              <h1 className="sr-only">Contact Zenith Health Allies</h1>
               <span className="inline-block px-3 py-1.5 md:px-4 md:py-2 bg-primary/10 text-primary rounded-full text-xs md:text-sm font-medium mb-3 md:mb-4">
                 Get in Touch
               </span>
@@ -61,8 +103,8 @@ export default function ContactPage() {
                 We'd Love to Hear From You
               </h2>
               <p className="text-muted-foreground text-base md:text-lg leading-relaxed mb-8 md:mb-10">
-                Home-like health care. Connect for expert guidance. Drop a message 
-                for personalized assistance. Our team is ready to help you with 
+                Home-like health care. Connect for expert guidance. Drop a message
+                for personalized assistance. Our team is ready to help you with
                 all your healthcare needs.
               </p>
 
@@ -89,7 +131,7 @@ export default function ContactPage() {
               <div className="mt-8 md:mt-10 p-4 md:p-6 gradient-hero rounded-2xl">
                 <h3 className="font-serif text-lg md:text-xl text-primary-foreground mb-2">Service Areas</h3>
                 <p className="text-primary-foreground/80 text-sm md:text-base">
-                  We proudly serve all areas in Maryland. Contact us to learn more 
+                  We proudly serve all areas in Maryland. Contact us to learn more
                   about our services in your area.
                 </p>
               </div>
@@ -97,8 +139,16 @@ export default function ContactPage() {
 
             {/* Contact Form */}
             <div className="bg-card rounded-2xl shadow-medium p-5 md:p-8">
-              <h3 className="font-serif text-xl md:text-2xl text-foreground mb-4 md:mb-6">Send Us a Message</h3>
+              <h3 className="font-serif text-xl md:text-2xl text-foreground mb-1 md:mb-2">Send Us a Message</h3>
+              {serviceType !== 'general' && (
+                <p className="text-sm text-primary font-medium mb-4 md:mb-6">
+                  Inquiry about: {serviceLabels[serviceType]}
+                </p>
+              )}
+              {serviceType === 'general' && <div className="mb-4 md:mb-6" />}
               <form onSubmit={handleSubmit} className="space-y-4 md:space-y-6">
+                {/* Hidden field carries service context through to Google Sheets */}
+                <input type="hidden" name="service_type" value={serviceType} />
                 <div className="grid sm:grid-cols-2 gap-4">
                   <div>
                     <label htmlFor="firstName" className="block text-sm font-medium text-foreground mb-2">

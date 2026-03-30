@@ -2,6 +2,7 @@ import { Layout } from '@/components/layout/Layout';
 import { Button } from '@/components/ui/button';
 import { Link, useParams, Navigate } from 'react-router-dom';
 import { CheckCircle, ArrowRight, ArrowLeft, Phone } from 'lucide-react';
+import { Helmet } from 'react-helmet-async';
 import nurseImage from '@/assets/nurse-portrait.jpg';
 import trainingImage from '@/assets/training-class.jpg';
 import homeCareImage from '@/assets/home-care.jpg';
@@ -90,6 +91,13 @@ Our rigorous screening process ensures that every professional we place meets th
   },
 };
 
+/** Maps each legacy slug to the canonical dedicated service page. */
+const canonicalMap: Record<string, string> = {
+  'nursing-services': 'https://zenithhealthallies.org/nursing',
+  'training-classes': 'https://zenithhealthallies.org/training',
+  'staffing-services': 'https://zenithhealthallies.org/staffing',
+};
+
 export default function ServiceDetailPage() {
   const { slug } = useParams<{ slug: string }>();
   const service = slug ? servicesData[slug as keyof typeof servicesData] : null;
@@ -98,8 +106,15 @@ export default function ServiceDetailPage() {
     return <Navigate to="/services" replace />;
   }
 
+  const canonical = slug ? canonicalMap[slug] : undefined;
+
   return (
     <Layout>
+      {canonical && (
+        <Helmet>
+          <link rel="canonical" href={canonical} />
+        </Helmet>
+      )}
       {/* Content Section */}
       <section className="py-20 md:py-28">
         <div className="container mx-auto px-4">

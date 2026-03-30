@@ -12,6 +12,8 @@ import Contact from "./pages/Contact";
 import Careers from "./pages/Careers";
 import Resources from "./pages/Resources";
 import Staffing from "./pages/Staffing";
+import Nursing from "./pages/Nursing";
+import Training from "./pages/Training";
 import NotFound from "./pages/NotFound";
 import { HelmetProvider } from "react-helmet-async";
 
@@ -34,6 +36,8 @@ const App = () => (
             <Route path="/careers" element={<Careers />} />
             <Route path="/resources" element={<Resources />} />
             <Route path="/staffing" element={<Staffing />} />
+            <Route path="/nursing" element={<Nursing />} />
+            <Route path="/training" element={<Training />} />
             <Route path="*" element={<NotFound />} />
           </Routes>
         </BrowserRouter>
