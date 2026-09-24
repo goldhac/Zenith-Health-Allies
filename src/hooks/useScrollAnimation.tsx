@@ -47,9 +47,9 @@ interface ScrollAnimateProps {
   animation?: 'fade-up' | 'fade-in' | 'slide-left' | 'slide-right' | 'scale';
 }
 
-export function ScrollAnimate({ 
-  children, 
-  className = '', 
+export function ScrollAnimate({
+  children,
+  className = '',
   delay = 0,
   animation = 'fade-up'
 }: ScrollAnimateProps) {
@@ -68,9 +68,8 @@ export function ScrollAnimate({
   return (
     <div
       ref={ref}
-      className={`transition-all duration-700 ease-out ${className} ${
-        isVisible ? visibleClasses : animationClasses[animation]
-      }`}
+      className={`transition-all duration-700 ease-out ${className} ${isVisible ? visibleClasses : animationClasses[animation]
+        }`}
       style={{ transitionDelay: `${delay}ms` }}
     >
       {children}

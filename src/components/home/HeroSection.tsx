@@ -51,17 +51,15 @@ export function HeroSection() {
       {heroSlides.map((s, index) => (
         <div
           key={index}
-          className={`absolute inset-0 transition-opacity duration-1000 ${
-            index === currentSlide ? 'opacity-100' : 'opacity-0'
-          }`}
+          className={`absolute inset-0 transition-opacity duration-1000 ${index === currentSlide ? 'opacity-100' : 'opacity-0'
+            }`}
         >
           <div className="absolute inset-0 overflow-hidden">
             <img
               src={s.image}
               alt={s.title}
-              className={`w-full h-full object-cover ${
-                index === currentSlide ? 'animate-ken-burns' : ''
-              }`}
+              className={`w-full h-full object-cover ${index === currentSlide ? 'animate-ken-burns' : ''
+                }`}
             />
           </div>
           {/* Light overlay */}
@@ -90,11 +88,10 @@ export function HeroSection() {
                       setIsTransitioning(false);
                     }, 300);
                   }}
-                  className={`h-1.5 rounded-full transition-all duration-500 ${
-                    index === currentSlide 
-                      ? 'w-12 bg-primary' 
+                  className={`h-1.5 rounded-full transition-all duration-500 ${index === currentSlide
+                      ? 'w-12 bg-primary'
                       : 'w-6 bg-foreground/20 hover:bg-foreground/30'
-                  }`}
+                    }`}
                 />
               ))}
             </div>
@@ -166,7 +163,7 @@ export function HeroSection() {
                 <p className="text-4xl font-serif text-primary mb-1">10+</p>
                 <p className="text-sm text-muted-foreground">Years of Excellence</p>
               </div>
-              
+
               {/* Main image card */}
               <div className="relative rounded-3xl overflow-hidden shadow-strong">
                 <img

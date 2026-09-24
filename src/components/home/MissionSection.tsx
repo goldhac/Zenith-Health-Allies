@@ -42,7 +42,7 @@ export function MissionSection() {
                 <div className="w-16 h-16 bg-primary rounded-2xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform">
                   <value.icon className="w-8 h-8 text-primary-foreground" />
                 </div>
-                
+
                 {/* Content */}
                 <h3 className="font-serif text-2xl text-foreground mb-4">
                   {value.title}

@@ -13,14 +13,14 @@ export function ContactSection() {
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setIsLoading(true);
-    
+
     await new Promise(resolve => setTimeout(resolve, 1000));
-    
+
     toast({
       title: "Message Sent!",
       description: "We'll get back to you within 24 hours.",
     });
-    
+
     setIsLoading(false);
     (e.target as HTMLFormElement).reset();
   };
@@ -39,7 +39,7 @@ export function ContactSection() {
                 Send Us a Message
               </h2>
               <p className="text-muted-foreground text-lg leading-relaxed mb-10">
-                Got questions? We have answers. Send us a message for dedicated and 
+                Got questions? We have answers. Send us a message for dedicated and
                 caring health services support tailored just for you.
               </p>
 
@@ -47,9 +47,9 @@ export function ContactSection() {
               <div className="space-y-4">
                 {[
                   { icon: Phone, label: 'Main Phone', value: '(240) 278-1871', href: 'tel:240-278-1871' },
-{ icon: Phone, label: 'Secondary Phone', value: '(240) 610-1390', href: 'tel:240-610-1390' },
-{ icon: Mail, label: 'Email', value: 'hello@moheritagecares.com', href: 'mailto:hello@moheritagecares.com' },
-{ icon: MapPin, label: 'Office', value: '10005 Columbia Rd, suite L-261 Maryland, 21046', href: null },
+                  { icon: Phone, label: 'Secondary Phone', value: '(240) 610-1390', href: 'tel:240-610-1390' },
+                  { icon: Mail, label: 'Email', value: 'hello@moheritagecares.com', href: 'mailto:hello@moheritagecares.com' },
+                  { icon: MapPin, label: 'Office', value: '10005 Columbia Rd, suite L-261 Maryland, 21046', href: null },
                 ].map((item, index) => (
                   <div
                     key={index}

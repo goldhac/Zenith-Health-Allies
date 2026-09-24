@@ -28,7 +28,7 @@ export function AboutSection() {
             {/* Decorative Elements - hidden on mobile */}
             <div className="hidden md:block absolute -top-6 -left-6 w-32 h-32 gradient-hero rounded-2xl -z-10 opacity-20" />
             <div className="hidden md:block absolute -bottom-6 -right-6 w-40 h-40 gradient-warm rounded-2xl -z-10 opacity-20" />
-            
+
             {/* Floating Card */}
             <div className="absolute -bottom-4 right-4 md:-bottom-8 md:-right-8 bg-card p-4 md:p-6 rounded-xl md:rounded-2xl shadow-medium z-20 max-w-[200px] md:max-w-[240px]">
               <div className="flex items-center gap-3">
@@ -52,9 +52,9 @@ export function AboutSection() {
               Start Your Home Health Care Journey With Us
             </h2>
             <p className="text-muted-foreground text-base md:text-lg leading-relaxed mb-6 md:mb-8">
-              At Zenith Health Allies, we invite you to commence your healthcare, 
-              training, and staffing journey with a commitment to compassionate and personalized 
-              support. Our dedicated team stands ready to guide you through a pathway of expert care, 
+              At Zenith Health Allies, we invite you to commence your healthcare,
+              training, and staffing journey with a commitment to compassionate and personalized
+              support. Our dedicated team stands ready to guide you through a pathway of expert care,
               ensuring comfort and well-being in the familiarity of your home.
             </p>
 
@@ -68,7 +68,7 @@ export function AboutSection() {
               ))}
             </ul>
 
-            <Button  size="lg" className="w-full sm:w-auto" asChild>
+            <Button size="lg" className="w-full sm:w-auto" asChild>
               <Link to="/about">
                 Learn More About Us
                 <ArrowRight className="w-5 h-5 ml-2" />
